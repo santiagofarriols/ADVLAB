@@ -74,26 +74,21 @@ export default function App() {
         return currentGoals.filter(goal=> goal.id !== goalid);
     });
     
-    var j= courseGoals.findIndex(element=> element.id == goalid)
-    setDestin(currentDestin =>{
-
-      return currentDestin.splice(j,0);
+      
     
-    });
   };
 
 
 
-  const removeGoalHandler1 = goalerase => {
-    setCourseGoals(currentGoals =>{
-      var j=0
-      for (var i=0; i<currentGoals.length; i++){
-        if(currentGoals[i] == goalerase){
-          j=i
-        }
-      }
-        return currentGoals.filter(goal=> goal.value !== goalerase);
-    });
+  const removeGoalHandler1 = diccIndex => {
+    setDestindicc(currentDicc =>{
+
+      return currentDicc.filter(goal=> goal.index !== diccIndex);
+
+  });
+    Destin.splice(diccIndex,1);
+  
+   
 
   };
   const cancelGoalAdditionHandler = () => {
@@ -123,6 +118,9 @@ export default function App() {
       <Text >{Destin.length}</Text>
       <Text >{courseGoals.value}</Text> */}
       {/* <Text>{Destindicc}</Text> */}
+      <Text>{courseGoals.value}</Text>
+      <Text>{Destin.length}</Text>
+
       <Button mode="outlined" color='goldenrod' onPress = {() => SetIsAddMode(true)} >Ajouter un nouveau trajet</Button>
       </View>
 
@@ -168,7 +166,7 @@ export default function App() {
             <Resultado 
               title={VillageActuel}
               SOCact={SOCActuel}
-              destinations={Destin}
+              destinations={courseGoals}
               />
             
             <Button mode="contained" onPress={() =>SetRes(false)}>Retour</Button>
