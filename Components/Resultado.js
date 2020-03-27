@@ -15,9 +15,12 @@ const distancess = [[0, 3.3, 4.8, 5.7, 4],
 const noms = ['Sandiara', 'Faylar', 'Sessene','Gohe','Ndiobene']
 
 
+
 const Resultado = props => {
 
+    
 
+    var dest =[];
     
     var a=false;
     
@@ -53,10 +56,14 @@ const Resultado = props => {
         }
 
     //On crée un array (des) des index de "noms" des destinations
-    for (var i=0; i<props.destinations.length; i++){
+    props.destinations.forEach(element => {
+        dest.push(element.value);
+    });
+    for (var i=0; i</* props.destinations */dest.length; i++){
         for (var j = 0; j < noms.length; j++) {
-            {noms[j]==props.destinations[i] ? des.push(j) :null};
-        }}
+            {noms[j]==/* props.destinations */dest[i] ? des.push(j) :null};
+        }
+    }
 
 
 
@@ -66,6 +73,8 @@ const Resultado = props => {
     var gl=[]
     //Route final
     var Route=[]
+    var Route3=[]
+    Route3.push(props.title)
     
     //pour toutes les lignes, on parcour toutes les elements de l'array de distances et on l'Additione, 
     //après on regarde c'est lequel la distance la plus courte et on garde l'index de la matrix de permutations
@@ -95,24 +104,70 @@ const Resultado = props => {
                 
             }
         var Route2=Route.join(',');
+        Route.forEach(item => 
+            Route3.push(" ->" + item  )
+            )
 
 
         //SOC après la course
 
         var Consommation = Distancemin*0.275 //Consomation de 0.33kWh par km
         var NewSOC=props.SOCact-(Consommation*100/33)
+        NewSOC=Math.round(NewSOC)
+
+        //Temps de la course (20km/h)
+        var temps=Distancemin*60/20
+        temps=Math.round(temps)
+
+        var Distanceloop=Distancemin+distancess[ver[indexMin][des.length-1]][indexActuel]
+        var SOCloop=props.SOCact-(Distanceloop*0.275*100/33)
+        SOCloop=Math.round(SOCloop)
+        var suffisant=true
+        var colorback="white"
+        if (SOCloop<0){
+            suffisant=false
+            colorback="crimson"
+        };
+        
+
     return (
         <PaperProvider theme={theme}>
         <Header1/> 
+        <View style={styles.vista,{backgroundColor: colorback, flex:1}}>
          <View style={styles.listItem} >       
             
             
-            
-            
-            <Text>DistanceMin={Distancemin}</Text>
-            <Text>RUTA={Route2}</Text>
-            <Text>Nouvel SOC={NewSOC}</Text>
+            <View style={styles.Resultados}>
+            <Title >Route à suivre:  </Title>
+            <Text>{Route3}</Text>
+            </View>
 
+            <View style={styles.Resultados}>
+            <Title>Distance: {Distancemin} km</Title>
+            </View>
+
+
+            <View style={styles.Resultados}>
+            <Title>Temps de la course: {temps} Min</Title>
+            </View>
+
+            <View style={styles.Resultados}>
+            <Title>Nouvel état de batterie: {NewSOC}%</Title>
+            </View>
+
+            <View style={styles.Resultados}>
+            <Title>Distance totale: {Distanceloop}</Title>
+            </View>
+
+            <View style={styles.Resultados}>
+            <Title>Da para volver?: {SOCloop}%</Title>
+            </View>
+
+            <View style={styles.Resultados}>
+            {suffisant ? <Title> "helloMessage"</Title> : <Title>"goodbyeMessage"</Title>} 
+            </View>
+            
+        </View>
         </View>
     
         </PaperProvider>
@@ -121,13 +176,28 @@ const Resultado = props => {
 
 const styles = StyleSheet.create({
     listItem: {
-        padding: 10,
-        marginVertical: 10,
+
+        /* padding: 10,
+        marginVertical: 10, */
+        padding:'8%',
+        /* flex:1, */
+        alignItems:"flex-start",
+        justifyContent:"center"
         
         },
 
+        Resultados: {
+            marginVertical: 10, 
+            
+            },
+        vista: {
+            flex: 1, 
+                      
+            },
+
         
-});
+            
+}); 
 const theme = {
     ...DefaultTheme,
     colors: {
@@ -136,4 +206,8 @@ const theme = {
       accent: 'black',
     },
 }
+
+
+
+
 export default Resultado;

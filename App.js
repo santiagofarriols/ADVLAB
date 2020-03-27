@@ -14,7 +14,7 @@ import Goalinput from './Components/Goalinput';
 import Actuel from './Components/Actuel';
 import Resultado from './Components/Resultado';
 import Card1 from './Components/Card1';
-import Header1 from './Components/Header1';
+import Headermain from './Components/Headermain';
 
 
  
@@ -33,11 +33,11 @@ export default function App() {
   setDestin[0];
   /* setDestindicc[{}]; */
 
-  const addGoalHandler = (goalTitle) => {
+  const addGoalHandler = (goalTitle,PersonnesTitle, KgTitle) => {
     
     setCourseGoals(currentGoals => [
       ...courseGoals, 
-      {id: Math.random().toString(), value: goalTitle}
+      {id: Math.random().toString(), value: goalTitle, perso: PersonnesTitle, kilo: KgTitle}
     ]);
 
     SetIsAddMode(false);
@@ -103,7 +103,7 @@ export default function App() {
 
   return (
     <PaperProvider theme={theme}>
-    <Header1/>
+    <Headermain/>
     <View style={styles.screen}>
       
       <Actuel
@@ -113,13 +113,7 @@ export default function App() {
 
 
       <View style={styles.ajouter} >
-      {/* <Text >{courseGoals.id}</Text>
-      <Text >{Destin}</Text>
-      <Text >{Destin.length}</Text>
-      <Text >{courseGoals.value}</Text> */}
-      {/* <Text>{Destindicc}</Text> */}
-      <Text>{courseGoals.value}</Text>
-      <Text>{Destin.length}</Text>
+      
 
       <Button mode="outlined" color='goldenrod' onPress = {() => SetIsAddMode(true)} >Ajouter un nouveau trajet</Button>
       </View>
@@ -132,6 +126,8 @@ export default function App() {
       onDelete={removeGoalHandler}
       onDelete1={removeGoalHandler1} 
       title={itemData.item.value}
+      person={itemData.item.perso}
+      kilog={itemData.item.kilo}
       id={itemData.item.id}
       
       
@@ -167,6 +163,7 @@ export default function App() {
               title={VillageActuel}
               SOCact={SOCActuel}
               destinations={courseGoals}
+              
               />
             
             <Button mode="contained" onPress={() =>SetRes(false)}>Retour</Button>
@@ -188,7 +185,8 @@ const styles = StyleSheet.create({
   },
   screen: {
     padding:'8%',
-    flex:1
+    flex:1,
+    
     
   },
   inputContainer: {

@@ -11,12 +11,22 @@ const Goalinput = props => {
     setEnteredGoal(enteredText)
   };  
 
+  const goalInputHandler2 = (enteredText) => {
+    setEnteredPersonnes(enteredText)
+  };  
+
+  const goalInputHandler3 = (enteredText) => {
+    setEnteredKg(enteredText)
+  };  
+
     
  
  
   const addGoalHandler = () => {
-    props.onAddGoal(enteredGoal);
+    props.onAddGoal(enteredGoal,enteredPersonnes,enteredKg);
     setEnteredGoal('');
+    setEnteredPersonnes('');
+    setEnteredKg('');
     
 
   };
@@ -39,7 +49,7 @@ const Goalinput = props => {
             /* placeholder="Village" 
             placeholderTextColor = 'grey' */
             style={styles.input2}
-            onChangeText={goalInputHandler} 
+            onChangeText={goalInputHandler2} 
             value={enteredPersonnes}
             mode='outlined'
             label='Personnes '
@@ -48,7 +58,7 @@ const Goalinput = props => {
             /* placeholder="Village" 
             placeholderTextColor = 'grey' */
             style={styles.input2}
-            onChangeText={goalInputHandler} 
+            onChangeText={goalInputHandler3} 
             value={enteredKg}
             mode='outlined'
             label='Kg '

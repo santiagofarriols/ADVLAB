@@ -1,16 +1,22 @@
 import * as React from 'react';
 import { Avatar, IconButton, Card, Title, Paragraph,Surface } from 'react-native-paper';
-import { StyleSheet,TouchableOpacity,View } from 'react-native';
+import { StyleSheet,TouchableOpacity,View,Text } from 'react-native';
 
 
 
-const Card1 = props => (
+const Card1 = props => {
+  var sub = " " + props.person + " personne, " + props.kilog + " Kg";
+
+
+  return(
+  
   <View style={styles.paquete}>
+    
   <Card style={styles.cardstyle}>
       
         <Card.Title  
             title={props.title} 
-            subtitle="ss" 
+            subtitle= {sub}
             right={(props)=> 
                 <Card.Actions>
                   
@@ -31,6 +37,7 @@ const Card1 = props => (
     </IconButton>
   </View>
 );
+}
 
 const styles = StyleSheet.create({
     paquete: {

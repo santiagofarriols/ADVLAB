@@ -2,18 +2,18 @@ import * as React from 'react';
 import { Appbar } from 'react-native-paper';
 
 export default class Headermain extends React.Component {
-  _goBack = () => console.log('Went back');
+  /* _goBack = () => console.log('Went back');
 
   _onSearch = () => console.log('Searching');
 
-  _onMore = () => console.log('Shown more');
+  _onMore = () => console.log('Shown more'); */
 
   render() {
     return (
       <Appbar.Header style={{fontWeight: 'bold'}}>
-        <Appbar.BackAction
+        {/* <Appbar.BackAction
           onPress={this._goBack}
-        />
+        /> */}
         <Appbar.Content 
         
           title="ADVLab"
