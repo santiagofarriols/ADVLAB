@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Appbar } from 'react-native-paper';
 
-export default class Headermain extends React.Component {
-  _goBack = () => console.log('Went back');
+export default class Header1 extends React.Component {
+  _goBack = () => this.props.botonn;
 
   _onSearch = () => console.log('Searching');
 

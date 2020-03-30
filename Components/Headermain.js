@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { Appbar } from 'react-native-paper';
+import ListV from './ListV';
 
+var iconuse="delete"
 export default class Headermain extends React.Component {
   /* _goBack = () => console.log('Went back');
 
-  _onSearch = () => console.log('Searching');
-
-  _onMore = () => console.log('Shown more'); */
+  _onSearch = () => console.log('Searching'); */
+    
+  _onMore = () =>    <ListV/> ;
 
   render() {
     return (
@@ -19,8 +21,8 @@ export default class Headermain extends React.Component {
           title="ADVLab"
           
         />
-        {/* <Appbar.Action icon="search" onPress={this._onSearch} />
-        <Appbar.Action icon="more-vert" onPress={this._onMore} /> */}
+        {/* <Appbar.Action icon="search" onPress={this._onSearch} /> */}
+        <Appbar.Action icon={iconuse} onPress={this._onMore} ></Appbar.Action>
       </Appbar.Header>
     );
   }

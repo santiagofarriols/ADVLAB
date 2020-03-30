@@ -1,7 +1,8 @@
 import React from 'react'
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, TouchableOpacity,Image} from 'react-native';
 import { Avatar, IconButton, Card, Title, Paragraph,Surface,Text, Button,DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import Header1 from './Header1';
+/* import nobattery from '/nobattery.png' */
 
 
 //Definition de matrix distances entre les villages. L'ordre c'est celui de "noms"
@@ -137,34 +138,48 @@ const Resultado = props => {
          <View style={styles.listItem} >       
             
             
-            <View style={styles.Resultados}>
-            <Title >Route à suivre:  </Title>
-            <Text>{Route3}</Text>
+            
+
+            <View>
+            {suffisant ? 
+            <View>
+             <View style={styles.Resultados}>
+                <Title >Route à suivre:  </Title>
+                <Text>{Route3}</Text>
+             </View>
+ 
+             <View style={styles.Resultados}>
+                <Title>Distance: {Distancemin} km</Title>
+             </View>
+ 
+ 
+             <View style={styles.Resultados}>
+                <Title>Temps de la course: {temps} Min</Title>
+             </View>
+ 
+             <View style={styles.Resultados}>
+                <Title>Nouvel état de batterie: {NewSOC}%</Title>
+             </View>
+ 
+             <View style={styles.Resultados}>
+                <Title>Distance totale: {Distanceloop}</Title>
+             </View>
+ 
+             <View style={styles.Resultados}>
+                <Title>Da para volver?: {SOCloop}%</Title>
+             </View>
             </View>
+             :
 
-            <View style={styles.Resultados}>
-            <Title>Distance: {Distancemin} km</Title>
+
+            <View style={styles.Resultados1}>
+                <Title style={{justifyContent:'flex-start'}}>La batterie n'est pas suffisante pour faire le trajet</Title>
+                <Image style={styles.logo}
+                    source={require('./nobattery.png')}
+                />
             </View>
-
-
-            <View style={styles.Resultados}>
-            <Title>Temps de la course: {temps} Min</Title>
-            </View>
-
-            <View style={styles.Resultados}>
-            <Title>Nouvel état de batterie: {NewSOC}%</Title>
-            </View>
-
-            <View style={styles.Resultados}>
-            <Title>Distance totale: {Distanceloop}</Title>
-            </View>
-
-            <View style={styles.Resultados}>
-            <Title>Da para volver?: {SOCloop}%</Title>
-            </View>
-
-            <View style={styles.Resultados}>
-            {suffisant ? <Title> "helloMessage"</Title> : <Title>"goodbyeMessage"</Title>} 
+            } 
+            
             </View>
             
         </View>
@@ -185,9 +200,25 @@ const styles = StyleSheet.create({
         justifyContent:"center"
         
         },
+        logo: {
+            justifyContent:'center',
+            alignItems:'center',
+            width: 180,
+            height: 170,
+            marginTop:50,
+            
+          },
 
         Resultados: {
             marginVertical: 10, 
+            
+            },
+        Resultados1: {
+            alignItems: 'center',
+            marginVertical: 10,
+            justifyContent: 'center',
+            flex:1,
+             
             
             },
         vista: {

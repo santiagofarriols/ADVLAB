@@ -15,6 +15,7 @@ import Actuel from './Components/Actuel';
 import Resultado from './Components/Resultado';
 import Card1 from './Components/Card1';
 import Headermain from './Components/Headermain';
+import ListV from './Components/ListV';
 
 
  
@@ -75,7 +76,7 @@ export default function App() {
     });
     
       
-    
+  
   };
 
 
@@ -96,6 +97,8 @@ export default function App() {
   };
 
 
+ 
+
   
 
   
@@ -114,11 +117,11 @@ export default function App() {
 
       <View style={styles.ajouter} >
       
-
+      
       <Button mode="outlined" color='goldenrod' onPress = {() => SetIsAddMode(true)} >Ajouter un nouveau trajet</Button>
       </View>
 
-      <FlatList 
+      <FlatList   
         keyExtractor={(item, index) => item.id}
         data={courseGoals} 
         renderItem={itemData =>(
@@ -164,6 +167,7 @@ export default function App() {
               SOCact={SOCActuel}
               destinations={courseGoals}
               
+              
               />
             
             <Button mode="contained" onPress={() =>SetRes(false)}>Retour</Button>
@@ -171,6 +175,7 @@ export default function App() {
         </View>
 
         
+       
       </PaperProvider>
         
   );
