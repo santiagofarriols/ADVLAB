@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {View, Text, Button, StyleSheet, Modal} from 'react-native';
+import {View, Text, Button, StyleSheet, Modal,} from 'react-native';
 import { Title,TextInput,IconButton} from 'react-native-paper';
 
 const Actuel = props => {
@@ -52,6 +52,8 @@ const Actuel = props => {
              >></IconButton>
             <TextInput 
               /* placeholder="Battery"  */
+              keyboardType="numeric"
+              returnKeyType="done"
               style={styles.input}
               mode='outlined'
               label='Battery'

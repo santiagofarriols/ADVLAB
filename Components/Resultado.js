@@ -1,10 +1,14 @@
 import React from 'react'
-import {View, StyleSheet, TouchableOpacity,Image} from 'react-native';
+import {View, StyleSheet, TouchableOpacity,Image,AsyncStorage} from 'react-native';
 import { Avatar, IconButton, Card, Title, Paragraph,Surface,Text, Button,DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import Header1 from './Header1';
+/* import * as SQLite from 'expo-sqlite'; */
+/* import {SQLite} from 'expo'; */
 /* import nobattery from '/nobattery.png' */
 
 
+
+/* const db = SQLite.openDatabase("test.db"); */
 //Definition de matrix distances entre les villages. L'ordre c'est celui de "noms"
 const distancess = [[0, 3.3, 4.8, 5.7, 4],
                     [3.3 , 0, 4, 3, 2],
@@ -13,14 +17,66 @@ const distancess = [[0, 3.3, 4.8, 5.7, 4],
                     [4, 2, 2, 1.7, 0]];
 
 //Villages dans la zone d'activité                    
-const noms = ['Sandiara', 'Faylar', 'Sessene','Gohe','Ndiobene']
+/* const noms = ['Sandiara', 'Faylar', 'Sessene','Gohe','Ndiobene'] */
 
 
 
 const Resultado = props => {
+    
+    /* var VillageAct=props.title;
+
+db.transaction(tx => {
+    tx.executeSql("PRAGMA foreign_keys=on");
+    tx.executeSql("CREATE TABLE IF NOT EXISTS [Class]([ClassId] INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, [ClassName] NVARCHAR(50)  NULL)");
+    tx.executeSql("CREATE TABLE IF NOT EXISTS [Students] ([StudentId] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,[StudentName] NVARCHAR(50)  NULL,[isPresent] NVARCHAR(50) DEFAULT false NOT NULL,[ClassId] INTEGER  NOT NULL,FOREIGN KEY(ClassId) REFERENCES Class(ClassId))");
+}); */
+
+
+    /* const insert = (VillageAct,Destination,Personnes,Kgs) => {
+        var query="INSERT INTO db (id,Village actuel, Destination, Personnes, Kgs) VALUES (null,?,?,?,?)";
+        var params=[VillageAct,Destination,Personnes,Kgs]
+        db.transaction((tx)=>{
+            tx.executeSql(query, params,(tx,results)=>{
+                console.log(results);
+                alert("Succes");
+            },function(tx,err){
+               alert('warning');
+                return;
+            
+            });
+        });
+    }
+    const handleSave = (objeto) => {
+        VillageAct=props.title;
+        var Destination=[]
+        var Personnes=[]
+        var Kgs=[]
+        objeto.forEach(element => {
+            Destination.push(objeto.value);
+            Personnes.push(objeto.perso)
+            Kgs.push(objeto.kilo);
+
+        });
+        for (var y=0;y<Destination.length; y++){
+
+       
+        if(VillageAct!='' && Destination[y] !=''&& Personnes[y] !=''&& Kgs[y] !='') {
+            insert(VillageAct,Destination[y],Personnes[y],Kgs[y]);
+    
+        }
+        else {
+        Alert.alert("Warning");
+    
+        }
+    }
+} */
 
     
-
+    var que = [];
+    props.destinations.forEach(element => {
+        que.push(element.value,element.perso,element.kilo);
+    });
+    
     var dest =[];
     
     var a=false;
@@ -52,8 +108,8 @@ const Resultado = props => {
 
     
     //On cherche dans "noms" l'index du village actuel
-    for (var i = 0; i < noms.length; i++) {
-        {noms[i]==props.title? indexActuel=i :null};
+    for (var i = 0; i < props.noms2.length; i++) {
+        {props.noms2[i]==props.title? indexActuel=i :null};
         }
 
     //On crée un array (des) des index de "noms" des destinations
@@ -61,8 +117,8 @@ const Resultado = props => {
         dest.push(element.value);
     });
     for (var i=0; i</* props.destinations */dest.length; i++){
-        for (var j = 0; j < noms.length; j++) {
-            {noms[j]==/* props.destinations */dest[i] ? des.push(j) :null};
+        for (var j = 0; j < props.noms2.length; j++) {
+            {props.noms2[j]==/* props.destinations */dest[i] ? des.push(j) :null};
         }
     }
 
@@ -101,7 +157,7 @@ const Resultado = props => {
 
         //Une fois qu'on a la ligne de distance minimal, On regarde la route avec les index dans "noms"
         for (var i=0; i<ver[0].length; i++){
-            Route.push(noms[ver[indexMin][i]])
+            Route.push(props.noms2[ver[indexMin][i]])
                 
             }
         var Route2=Route.join(',');
@@ -130,10 +186,12 @@ const Resultado = props => {
             colorback="crimson"
         };
         
-
+        
     return (
         <PaperProvider theme={theme}>
-        <Header1/> 
+        <Header1 
+        botonn1={props.botonn}
+        /> 
         <View style={styles.vista,{backgroundColor: colorback, flex:1}}>
          <View style={styles.listItem} >       
             
@@ -177,6 +235,8 @@ const Resultado = props => {
                 <Image style={styles.logo}
                     source={require('./nobattery.png')}
                 />
+                <Button mode="contained" onPress={() =>inserto('hey')}>probar</Button>
+                
             </View>
             } 
             

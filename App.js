@@ -5,9 +5,14 @@ import {
   FlatList,
   TextInput,
   Text,
-  Modal
+  Modal,
+  AsyncStorage,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Alert
 } from 'react-native';
 import { DefaultTheme, Provider as PaperProvider,Button } from 'react-native-paper';
+/* import { openDatabase } from "expo-sqlite"; */
 
 import Goalitem from './Components/Goalitem';
 import Goalinput from './Components/Goalinput';
@@ -16,9 +21,14 @@ import Resultado from './Components/Resultado';
 import Card1 from './Components/Card1';
 import Headermain from './Components/Headermain';
 import ListV from './Components/ListV';
+import Datatest2 from './Components/Datatest2';
+import { render } from 'react-dom';
+/* import DismissK from './Components/DismissK' */
 
 
- 
+const noms = ['Sandiara', 'Faylar', 'Sessene','Gohe','Ndiobene']
+
+
 
 export default function App() {
   
@@ -29,10 +39,16 @@ export default function App() {
   const [SOCActuel, setSOCActuel] = useState([]);
   const [isAddmode, SetIsAddMode] = useState(false);
   const [Res, SetRes] = useState(false);
+  const [Res2, SetRes2] = useState(false);
 
   
+  var courseDes=[]
+  var cuantos
   setDestin[0];
   /* setDestindicc[{}]; */
+
+
+  
 
   const addGoalHandler = (goalTitle,PersonnesTitle, KgTitle) => {
     
@@ -89,26 +105,66 @@ export default function App() {
   });
     Destin.splice(diccIndex,1);
   
-   
-
-  };
+   };
   const cancelGoalAdditionHandler = () => {
     SetIsAddMode(false);
   };
+  
+  const actor = () => {
+    var estax=false
+
+    for(var i=0; i<noms.length;i++){
+      if (enteredGoal==props.noms1[i]){
+        estax=true
+      }
+    }
+    if (estax==true){
+    props.onAddGoal(enteredGoal,enteredPersonnes,enteredKg);
+    setEnteredGoal('');
+    setEnteredPersonnes('');
+    setEnteredKg('');
+    }
+    if (estax==false) {
+      Alert.alert('Villages disponibles:',' \n'  + desc.join(""))
+    }
+    SetRes(false);
+  };
+
+
+  const actor1 = () => {
+    SetRes(false);
+  };
+
+
+  const actortrue = () => {
+    SetRes(true);
+  };
+  
+  
+  courseGoals.forEach(element => {
+    courseDes.push([element.value,element.perso,element.kilo]);
+    cuantos=courseDes.length
+});
+  
+  
+ 
+
+ 
+
 
 
  
 
-  
 
-  
 
 
   return (
+    
     <PaperProvider theme={theme}>
     <Headermain/>
+    
     <View style={styles.screen}>
-      
+    
       <Actuel
         onAddActuel={addActuelHandler}
         onAddSOC={addSOCHandler}
@@ -119,6 +175,7 @@ export default function App() {
       
       
       <Button mode="outlined" color='goldenrod' onPress = {() => SetIsAddMode(true)} >Ajouter un nouveau trajet</Button>
+       
       </View>
 
       <FlatList   
@@ -139,6 +196,7 @@ export default function App() {
       )}
       />
       <Goalinput 
+        noms1={noms}
         visible={isAddmode} 
         onAddGoal={addGoalHandler} 
         onCancel={cancelGoalAdditionHandler}
@@ -158,28 +216,44 @@ export default function App() {
         
         <View style={styles.aller}>
           <Button  dark={false} mode="contained" onPress={() =>SetRes(true) }>Aller</Button>
+          <Button  dark={false} mode="contained" onPress={() =>SetRes2(true) }>test</Button>
           
-
         </View>
           <Modal visible={Res}>
             <Resultado 
               title={VillageActuel}
               SOCact={SOCActuel}
               destinations={courseGoals}
-              
+              botonn={actor1}
+              noms2={noms}
               
               />
             
             <Button mode="contained" onPress={() =>SetRes(false)}>Retour</Button>
           </Modal>
+          
         </View>
 
         
-       
+        <View>
+          {/* <Modal visible={Res2}> */}
+            <Datatest2 
+            viajes={courseDes}
+            cuantos={cuantos}
+            viact={VillageActuel}
+            listo={actortrue}
+            />
+            
+            <Button mode="contained" onPress={() =>SetRes2(false)}>Retour</Button>
+          
+          
+        </View>
+
       </PaperProvider>
-        
+      
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
