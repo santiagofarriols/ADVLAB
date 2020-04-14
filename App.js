@@ -39,7 +39,7 @@ export default function App() {
   const [SOCActuel, setSOCActuel] = useState([]);
   const [isAddmode, SetIsAddMode] = useState(false);
   const [Res, SetRes] = useState(false);
-  const [Res2, SetRes2] = useState(false);
+  
 
   
   var courseDes=[]
@@ -137,7 +137,10 @@ export default function App() {
 
 
   const actortrue = () => {
+
+
     SetRes(true);
+    
   };
   
   
@@ -192,7 +195,7 @@ export default function App() {
       
       
       />
-      //como agregar tambien personas y kg??
+      
       )}
       />
       <Goalinput 
@@ -202,23 +205,9 @@ export default function App() {
         onCancel={cancelGoalAdditionHandler}
       />
 
-      {/* <FlatList 
-        keyExtractor={(item, index) => item.id}
-        data={courseGoals} 
-        renderItem={itemData =>(
-        <Goalitem 
-          id={itemData.item.id} 
-          onDelete={removeGoalHandler} 
-          title={itemData.item.value}
-        />
-        )}
-      /> */}
+     
         
-        <View style={styles.aller}>
-          <Button  dark={false} mode="contained" onPress={() =>SetRes(true) }>Aller</Button>
-          <Button  dark={false} mode="contained" onPress={() =>SetRes2(true) }>test</Button>
-          
-        </View>
+        
           <Modal visible={Res}>
             <Resultado 
               title={VillageActuel}
@@ -231,23 +220,21 @@ export default function App() {
             
             <Button mode="contained" onPress={() =>SetRes(false)}>Retour</Button>
           </Modal>
-          
-        </View>
 
-        
-        <View>
-          {/* <Modal visible={Res2}> */}
-            <Datatest2 
+
+           {/* <Modal visible={Res2}> */}
+           <Datatest2 
             viajes={courseDes}
             cuantos={cuantos}
             viact={VillageActuel}
             listo={actortrue}
+            noms3={noms}
             />
-            
-            <Button mode="contained" onPress={() =>SetRes2(false)}>Retour</Button>
-          
           
         </View>
+
+        
+        
 
       </PaperProvider>
       
@@ -288,6 +275,8 @@ const styles = StyleSheet.create({
      alignItems: "flex-end",
     padding: 10,
   },
+
+  
 
   ajouter: {
     
