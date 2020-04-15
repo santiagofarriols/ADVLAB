@@ -33,6 +33,7 @@ const noms = ['Sandiara', 'Faylar', 'Sessene','Gohe','Ndiobene']
 export default function App() {
   
   const [courseGoals, setCourseGoals] = useState([]);
+  const [Vehicule, setVehicule] = useState('master');
   const [Destin, setDestin] = useState([]); 
   const [Destindicc, setDestindicc] = useState([]);
   const [VillageActuel, setVillageActuel] = useState([]);
@@ -143,12 +144,18 @@ export default function App() {
     
   };
   
-  
+  const changeVehicule = insertedVehicule => {
+
+
+   setVehicule(insertedVehicule)    
+  };
   courseGoals.forEach(element => {
     courseDes.push([element.value,element.perso,element.kilo]);
     cuantos=courseDes.length
 });
   
+
+
   
  
 
@@ -164,7 +171,7 @@ export default function App() {
   return (
     
     <PaperProvider theme={theme}>
-    <Headermain/>
+    <Headermain change={changeVehicule}/>
     
     <View style={styles.screen}>
     
@@ -215,6 +222,7 @@ export default function App() {
               destinations={courseGoals}
               botonn={actor1}
               noms2={noms}
+              quelVehicule={Vehicule}
               
               />
             

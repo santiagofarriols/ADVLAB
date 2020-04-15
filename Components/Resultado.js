@@ -23,53 +23,7 @@ const distancess = [[0, 3.3, 4.8, 5.7, 4],
 
 const Resultado = props => {
     
-    /* var VillageAct=props.title;
-
-db.transaction(tx => {
-    tx.executeSql("PRAGMA foreign_keys=on");
-    tx.executeSql("CREATE TABLE IF NOT EXISTS [Class]([ClassId] INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, [ClassName] NVARCHAR(50)  NULL)");
-    tx.executeSql("CREATE TABLE IF NOT EXISTS [Students] ([StudentId] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,[StudentName] NVARCHAR(50)  NULL,[isPresent] NVARCHAR(50) DEFAULT false NOT NULL,[ClassId] INTEGER  NOT NULL,FOREIGN KEY(ClassId) REFERENCES Class(ClassId))");
-}); */
-
-
-    /* const insert = (VillageAct,Destination,Personnes,Kgs) => {
-        var query="INSERT INTO db (id,Village actuel, Destination, Personnes, Kgs) VALUES (null,?,?,?,?)";
-        var params=[VillageAct,Destination,Personnes,Kgs]
-        db.transaction((tx)=>{
-            tx.executeSql(query, params,(tx,results)=>{
-                console.log(results);
-                alert("Succes");
-            },function(tx,err){
-               alert('warning');
-                return;
-            
-            });
-        });
-    }
-    const handleSave = (objeto) => {
-        VillageAct=props.title;
-        var Destination=[]
-        var Personnes=[]
-        var Kgs=[]
-        objeto.forEach(element => {
-            Destination.push(objeto.value);
-            Personnes.push(objeto.perso)
-            Kgs.push(objeto.kilo);
-
-        });
-        for (var y=0;y<Destination.length; y++){
-
-       
-        if(VillageAct!='' && Destination[y] !=''&& Personnes[y] !=''&& Kgs[y] !='') {
-            insert(VillageAct,Destination[y],Personnes[y],Kgs[y]);
-    
-        }
-        else {
-        Alert.alert("Warning");
-    
-        }
-    }
-} */
+   
 
     
     var que = [];
@@ -116,9 +70,9 @@ db.transaction(tx => {
     props.destinations.forEach(element => {
         dest.push(element.value);
     });
-    for (var i=0; i</* props.destinations */dest.length; i++){
+    for (var i=0; i<dest.length; i++){
         for (var j = 0; j < props.noms2.length; j++) {
-            {props.noms2[j]==/* props.destinations */dest[i] ? des.push(j) :null};
+            {props.noms2[j]==dest[i] ? des.push(j) :null};
         }
     }
 
@@ -165,10 +119,36 @@ db.transaction(tx => {
             Route3.push(" ->" + item  )
             )
 
+        // calcul de la charge utile
+        var persons=[]
+        var kilos=[]
+        props.destinations.forEach(element => {
+            persons.push(element.perso);
+        });
+        props.destinations.forEach(element => {
+            kilos.push(element.kilo);
+        });
+            var peso=61 //le chauffeur (61 kg moyenne personne africaine )
+            for (var i=0;i<dest.length;i++){
+                peso=peso+parseInt(persons[i])*61+parseInt(kilos[i])
+            }
+        // Calcul de la consomation  E = (( 1.617x MASSE + 99.6 )x 5/1000)×(1+30/100) 
+        //masse véhicule: master=1972, kangoo=1489, jinbei=1210
+        
 
+
+        if (props.quelVehicule=='master'){
+            var energy = (( 1.617* (peso + 1972) + 99.6 )*5/1000)*(1+30/100) }
+        if (props.quelVehicule=='kangoo'){
+            var energy = (( 1.617*(peso + 1489)  + 99.6 )* 5/1000)*(1+30/100) }
+        if (props.quelVehicule=='jinbei'){
+            var energy = (( 1.617*(peso + 1210) + 99.6 )* 5/1000)*(1+30/100) }
+
+
+        
         //SOC après la course
 
-        var Consommation = Distancemin*0.275 //Consomation de 0.33kWh par km
+        var Consommation = Distancemin*energy/100 //energy c'est combien de kWh il depense en 100km
         var NewSOC=props.SOCact-(Consommation*100/33)
         NewSOC=Math.round(NewSOC)
 
@@ -177,11 +157,11 @@ db.transaction(tx => {
         temps=Math.round(temps)
 
         var Distanceloop=Distancemin+distancess[ver[indexMin][des.length-1]][indexActuel]
-        var SOCloop=props.SOCact-(Distanceloop*0.275*100/33)
+        var SOCloop=props.SOCact-(Distanceloop*energy/33)
         SOCloop=Math.round(SOCloop)
         var suffisant=true
         var colorback="white"
-        if (SOCloop<0){
+        if (SOCloop<15){
             suffisant=false
             colorback="crimson"
         };
@@ -212,7 +192,7 @@ db.transaction(tx => {
  
  
              <View style={styles.Resultados}>
-                <Title>Temps de la course: {temps} Min</Title>
+                <Title>Temps de la course: {temps} Min </Title>
              </View>
  
              <View style={styles.Resultados}>
@@ -231,11 +211,12 @@ db.transaction(tx => {
 
 
             <View style={styles.Resultados1}>
+                
                 <Title style={{justifyContent:'flex-start'}}>La batterie n'est pas suffisante pour faire le trajet</Title>
                 <Image style={styles.logo}
                     source={require('./nobattery.png')}
                 />
-                <Button mode="contained" onPress={() =>inserto('hey')}>probar</Button>
+                
                 
             </View>
             } 
@@ -297,7 +278,7 @@ const theme = {
       accent: 'black',
     },
 }
-
+        
 
 
 
