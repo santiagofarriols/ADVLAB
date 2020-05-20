@@ -23,7 +23,13 @@ import Headermain from './Components/Headermain';
 import ListV from './Components/ListV';
 import Datatest2 from './Components/Datatest2';
 import { render } from 'react-dom';
+import Firetest from './Components/Firetest'
+import Geo from './Components/Geo'
 /* import DismissK from './Components/DismissK' */
+
+
+
+
 
 
 const noms = ['Sandiara', 'Faylar', 'Sessene','Gohe','Ndiobene']
@@ -51,11 +57,11 @@ export default function App() {
 
   
 
-  const addGoalHandler = (goalTitle,PersonnesTitle, KgTitle) => {
+  const addGoalHandler = (goalTitle,PersonnesTitle, KgTitle,Motif) => {
     
     setCourseGoals(currentGoals => [
       ...courseGoals, 
-      {id: Math.random().toString(), value: goalTitle, perso: PersonnesTitle, kilo: KgTitle}
+      {id: Math.random().toString(), value: goalTitle, perso: PersonnesTitle, kilo: KgTitle, motif: Motif}
     ]);
 
     SetIsAddMode(false);
@@ -150,7 +156,7 @@ export default function App() {
    setVehicule(insertedVehicule)    
   };
   courseGoals.forEach(element => {
-    courseDes.push([element.value,element.perso,element.kilo]);
+    courseDes.push([element.value,element.perso,element.kilo,element.motif]);
     cuantos=courseDes.length
 });
   
@@ -226,7 +232,7 @@ export default function App() {
               
               />
             
-            <Button mode="contained" onPress={() =>SetRes(false)}>Retour</Button>
+            {/* <Button mode="contained" onPress={() =>SetRes(false)}>Retour</Button> */}
           </Modal>
 
 
@@ -238,7 +244,14 @@ export default function App() {
             listo={actortrue}
             noms3={noms}
             />
-          
+          <Firetest
+          viajes={courseDes}
+          cuantos={cuantos}
+          viact={VillageActuel}
+          listo={actortrue}
+          noms3={noms}
+          />
+          <Geo/>
         </View>
 
         

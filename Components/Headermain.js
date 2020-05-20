@@ -53,7 +53,7 @@ export default class Headermain extends React.Component {
       </Portal>
         <Appbar.Content 
         
-          title="ADVLab"
+          title="        ADVLab"
           
         />
         {/* <Appbar.Action icon="search" onPress={this._onSearch} /> */}

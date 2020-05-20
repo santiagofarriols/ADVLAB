@@ -28,11 +28,11 @@ class Datatest2 extends Component {
    componentDidMount() {
     db.transaction(tx => {
       tx.executeSql(
-        'create table if not exists account4 (Trajet integer primary key not null,Date text, Heure text, Village_Actuel text, Destin text, Personnes integer, Kgs integer);',[],()=>console.log("Created!"),(a,b)=>console.log(b)
+        'create table if not exists account5 (Trajet integer primary key not null,Date text, Heure text, Village_Actuel text, Destin text, Personnes integer, Kgs integer, Motif text);',[],()=>console.log("Created!"),(a,b)=>console.log(b)
       );
       console.log("created table account2 ");
       tx.executeSql(
-        'create table if not exists tablex (id integer primary key not null, relatedAccount_id int, type int, amount int, balanceAfterTransaction int, dateTime text, description text, FOREIGN KEY(relatedAccount_id) REFERENCES account4(trajet) );',[],()=>console.log("Created2!")
+        'create table if not exists tablex (id integer primary key not null, relatedAccount_id int, type int, amount int, balanceAfterTransaction int, dateTime text, description text, FOREIGN KEY(relatedAccount_id) REFERENCES account5(trajet) );',[],()=>console.log("Created2!")
       );
     });
   }
@@ -53,9 +53,9 @@ class Datatest2 extends Component {
     db.transaction(
       tx => {
         for (var u=0; u<this.props.cuantos;u++){
-        console.log(tx.executeSql('insert into account4 (Date, Heure, Village_Actuel , Destin, Personnes, Kgs) values (?,?,?,?,?,?)',[date+'/'+month+'/'+year,hours+':'+min+':'+sec,this.props.viact,this.props.viajes[u][0],this.props.viajes[u][1],this.props.viajes[u][2]],()=>console.log("sucess!"),(a,b)=>console.log(b)));
+        console.log(tx.executeSql('insert into account5 (Date, Heure, Village_Actuel , Destin, Personnes, Kgs, Motif) values (?,?,?,?,?,?,?)',[date+'/'+month+'/'+year,hours+':'+min+':'+sec,this.props.viact,this.props.viajes[u][0],this.props.viajes[u][1],this.props.viajes[u][2],this.props.viajes[u][3]],()=>console.log("sucess!"),(a,b)=>console.log(b)));
         console.log("inserted new account "+this.state.sourceName+" fin");
-        tx.executeSql('select * from account4', [], (_, { rows }) =>
+        tx.executeSql('select * from account5', [], (_, { rows }) =>
           console.log(JSON.stringify(rows)),(a,b)=>console.log(b)
         );
         console.log("exit");
@@ -77,13 +77,16 @@ class Datatest2 extends Component {
         estay=true
       }
     }
-    if (estay==true){
+    if (estay==true && this.props.viajes.length>0 ){
         this.addSource()
         this.props.listo()
     }
     if (estay==false) {
       Alert.alert('Village Actuel ne pas trouvé.\n\nDisponibles:',' \n'  + desc.join(""))
     }
+    if (this.props.viajes.length<1) {
+        Alert.alert('Insérez une destination')
+      }
     
    }
 

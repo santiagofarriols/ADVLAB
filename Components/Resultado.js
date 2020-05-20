@@ -157,6 +157,7 @@ const Resultado = props => {
         temps=Math.round(temps)
 
         var Distanceloop=Distancemin+distancess[ver[indexMin][des.length-1]][indexActuel]
+        Distanceloop=Math.round(Distanceloop * 1000)/1000
         var SOCloop=props.SOCact-(Distanceloop*energy/33)
         SOCloop=Math.round(SOCloop)
         var suffisant=true
@@ -204,7 +205,7 @@ const Resultado = props => {
              </View>
  
              <View style={styles.Resultados}>
-                <Title>Da para volver?: {SOCloop}%</Title>
+                <Title>Suffisant pour rentrer? {SOCloop}%</Title>
              </View>
             </View>
              :
@@ -247,6 +248,7 @@ const styles = StyleSheet.create({
             width: 180,
             height: 170,
             marginTop:50,
+            marginLeft:20
             
           },
 

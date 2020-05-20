@@ -5,7 +5,7 @@ import { StyleSheet,TouchableOpacity,View,Text } from 'react-native';
 
 
 const Card1 = props => {
-  var sub = " " + props.person + " personne, " + props.kilog + " Kg";
+  var sub = " " + props.person + " personne(s), " + props.kilog + " Kgs";
 
 
   return(
